@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+
+    <Properties>
+        <Property name="LOG_PATTERN">
+            
+            %highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName}  %pid %tid --- [%t] %c : %m%n%ex}{FATAL=white, ERROR=red, WARN=blue, INFO=green, DEBUG=yellow, TRACE=blue}
+        </Property>
+        <!-- <Property name="filename">target/test.log</Property> -->
+    </Properties>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout disableAnsi="false"  pattern="${LOG_PATTERN}"/>
+        </Console>
+        <!-- <File name="MyFile" fileName="d://logs//all.log" append="false">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <RollingFile name="RollingFile" fileName="d://logs//all.log" filePattern="d://logs//app-%d{MM-dd-yyyy}.log"
+                 ignoreExceptions="false">
+	      <PatternLayout>
+	        <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+	      </PatternLayout>
+	      <TimeBasedTriggeringPolicy />
+	    </RollingFile> -->
+	    <RollingFile name="RollingFile" fileName="target/logs/app.log"
+                 filePattern="target/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
+	      <PatternLayout disableAnsi="false">
+	        <Pattern>%highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%t] %c : %m%n%ex}{FATAL=white, ERROR=red, WARN=blue, INFO=green, DEBUG=green, TRACE=blue}</Pattern>
+	      </PatternLayout>
+	      <Policies>
+	      	<OnStartupTriggeringPolicy />
+	        <TimeBasedTriggeringPolicy />
+	        <SizeBasedTriggeringPolicy size="2 MB"/>
+	      </Policies>
+	    </RollingFile>
+    </Appenders>
+    <Loggers>
+       <!--  <Logger name="com.example.rest.webservices" level="debug" additivity="false">
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="MyFile"/>
+        </Logger> -->
+
+       <Root level="info">
+       		<!-- <AppenderRef ref="MyFile"/> -->
+       		<AppenderRef ref="RollingFile"/>
+		    <AppenderRef ref="ConsoleAppender"/>
+		    
+		</Root>
+    </Loggers>
+</Configuration>
