@@ -22,10 +22,12 @@
 	      </PatternLayout>
 	      <TimeBasedTriggeringPolicy />
 	    </RollingFile> -->
-	    <RollingFile name="RollingFile" fileName="target/logs/app.log"
-                 filePattern="target/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
+	    <RollingFile name="RollingFile" fileName="d:/logs/app.log"
+                 filePattern="d:/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
 	      <PatternLayout disableAnsi="false">
-	        <Pattern>%highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%t] %c : %m%n%ex}{FATAL=white, ERROR=red, WARN=blue, INFO=green, DEBUG=green, TRACE=blue}</Pattern>
+	        <Pattern>
+	        %highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName}  %pid %tid --- [%t] %c : %m%n%ex}{FATAL=white, ERROR=red, WARN=blue, INFO=green, DEBUG=yellow, TRACE=blue}
+	        </Pattern>
 	      </PatternLayout>
 	      <Policies>
 	      	<OnStartupTriggeringPolicy />
