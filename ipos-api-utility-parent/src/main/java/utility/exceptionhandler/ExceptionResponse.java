@@ -25,8 +25,14 @@ private int errorCode;
 		this.errorMessage = errorMessage;
 	}
 
-	public ExceptionResponse(int errorCode, int stausCode, String errorMessage, String errorDetails) {
-		// TODO Auto-generated constructor stub
+	
+
+	public ExceptionResponse(int errorCode, int statusCode, String errorMessage, String errorDetails) {
+		super();
+		this.errorCode = errorCode;
+		this.statusCode = statusCode;
+		this.errorMessage = errorMessage;
+		this.errorDetails = errorDetails;
 	}
 
 	public void setErrorCode(int errorCode) {
