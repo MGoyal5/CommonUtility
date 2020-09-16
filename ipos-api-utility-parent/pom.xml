@@ -9,9 +9,8 @@
 	<groupId>ipos-commonutility</groupId>
 	<artifactId>ipos-api-utility-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
 	<name>ipos-api-utility-parent</name>
-	<description>common utility project</description>  
+	<description>common utility project</description>
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>4.0.2.RELEASE</org.springframework-version>
@@ -20,6 +19,8 @@
     	<maven.compiler.target>11</maven.compiler.target>
 		<org.slf4j-version>1.7.5</org.slf4j-version>
 		<jackson.databind-version>2.2.3</jackson.databind-version>
+		<org.apache.logging-version>2.13.3</org.apache.logging-version>
+		<org.projectlombok-version>1.18.8</org.projectlombok-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -39,12 +40,10 @@
 		<dependency>
    			 <groupId>org.projectlombok</groupId>
     		 <artifactId>lombok</artifactId>
-    		 <version>1.18.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${org.springframework-version}</version>
 			<exclusions>
 				<!-- Exclude Commons Logging in favor of SLF4j -->
 				<exclusion>
@@ -56,17 +55,14 @@
 		<dependency>
     		<groupId>org.springframework</groupId>
     		<artifactId>spring-web</artifactId>
-   			 <version>4.3.1.RELEASE</version>
 		</dependency> 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${org.springframework-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>5.1.6.RELEASE</version>
 		</dependency>
 	</dependencies>
 </project>
