@@ -1,6 +1,7 @@
-package utility.exceptionhandler;
+package utility.exceptionhandler.runtimeexception;
 
-public class ExceptionResponse {
+public class IposException extends RuntimeException {
+	
 private int errorCode;
 	
 	private int statusCode;
@@ -9,36 +10,21 @@ private int errorCode;
 	
 	private String errorDetails;
 
+	public IposException(int errorCode, int statusCode, String errorMessage, String errorDetails) {
+		super();
+		this.errorCode = errorCode;
+		this.statusCode = statusCode;
+		this.errorMessage = errorMessage;
+		this.errorDetails = errorDetails;
+	}
+
+	public IposException(String errorMessage) {
+		super();
+		this.errorMessage = errorMessage;
+	}
+
 	public int getErrorCode() {
 		return errorCode;
-	}
-
-	/*
-	 * public ExceptionMessage(int errorCode, String errorMessage) { super();
-	 * this.errorCode = errorCode; this.errorMessage = errorMessage; }
-	 */
-	
-	
-	public ExceptionResponse(int statusCode, String errorMessage) {
-		super();
-		this.statusCode = statusCode;
-		this.errorMessage = errorMessage;
-	}
-
-	
-
-	public ExceptionResponse(int errorCode, int statusCode, String errorMessage, String errorDetails) {
-		super();
-		this.errorCode = errorCode;
-		this.statusCode = statusCode;
-		this.errorMessage = errorMessage;
-		this.errorDetails = errorDetails;
-	}
-
-	public ExceptionResponse(int errorCode, String errorMessage, String errorDetails) {
-		this.errorCode = errorCode;
-		this.errorMessage = errorMessage;
-		this.errorDetails = errorDetails;
 	}
 
 	public void setErrorCode(int errorCode) {
@@ -68,5 +54,7 @@ private int errorCode;
 	public void setErrorDetails(String errorDetails) {
 		this.errorDetails = errorDetails;
 	}
+    
+	
 
 }
