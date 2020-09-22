@@ -24,6 +24,11 @@ public class LogHelper {
 		log.info(message);
 	}
 	
+	public static void info(String message)
+	{
+		Logger log = LogManager.getLogger();
+		log.info(message);
+	}
 	
 	/**
 	 * helper class w() to log warning level information.

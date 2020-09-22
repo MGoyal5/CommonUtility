@@ -79,4 +79,32 @@
 		  <version>4.5.0</version>
 		</dependency>
 	</dependencies>
+	<profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <activatedProperties>dev</activatedProperties>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <activatedProperties>prod</activatedProperties>
+            </properties>
+        </profile>
+    </profiles>
+    <build>
+	  	<pluginManagement>
+	    <plugins>
+	      <plugin>
+	        <groupId>org.sonarsource.scanner.maven</groupId>
+	        <artifactId>sonar-maven-plugin</artifactId>
+	        <version>3.0.1</version>
+	      </plugin>
+	    </plugins>
+	  	</pluginManagement>
+	</build>
 </project>

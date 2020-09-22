@@ -10,7 +10,7 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.ServletWebRequest;
+//import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -55,7 +55,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		ServletWebRequest servletWebRequest = (ServletWebRequest) request;
+//		ServletWebRequest servletWebRequest = (ServletWebRequest) request;
 		ExceptionResponse exceptionResponse = new ExceptionResponse(ErrorStatus.MESSAGENOTREADABLE.getValue(),
 				HttpStatus.BAD_REQUEST.value(), ErrorStatus.MESSAGENOTREADABLE.getReasonPhrase(),
 				ErrorStatus.MESSAGENOTREADABLE.getSuggestion());

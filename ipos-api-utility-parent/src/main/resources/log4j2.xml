@@ -23,31 +23,23 @@
 	      </PatternLayout>
 	      <TimeBasedTriggeringPolicy />
 	    </RollingFile> -->
-	    <RollingFile name="RollingFile" fileName="d:/logs/app.log"
-                 filePattern="d:/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
+	    <RollingFile name="RollingFile" fileName="/logs/app.log"
+                 filePattern="/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
 	      <PatternLayout disableAnsi="false">
 	        <Pattern>
 	        %highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName}  %pid %tid --- [%t] %c : %m%n%ex}{FATAL=white, ERROR=red, WARN=blue, INFO=green, DEBUG=yellow, TRACE=blue}
 	        </Pattern>
 	      </PatternLayout>
 	      <Policies>
-	      	<OnStartupTriggeringPolicy />
-	        <TimeBasedTriggeringPolicy />
-	        <SizeBasedTriggeringPolicy size="2 MB"/>
+	        <SizeBasedTriggeringPolicy size="10 MB"/>
 	      </Policies>
 	    </RollingFile>
     </Appenders>
     <Loggers>
-       <!--  <Logger name="com.example.rest.webservices" level="debug" additivity="false">
-            <AppenderRef ref="ConsoleAppender" />
-            <AppenderRef ref="MyFile"/>
-        </Logger> -->
-
        <Root level="info">
        		<!-- <AppenderRef ref="MyFile"/> -->
        		<AppenderRef ref="RollingFile"/>
-		    <AppenderRef ref="ConsoleAppender"/>
-		    
+		    <AppenderRef ref="ConsoleAppender"/>    
 		</Root>
     </Loggers>
 </Configuration>
