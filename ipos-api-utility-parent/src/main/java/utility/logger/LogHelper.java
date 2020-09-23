@@ -44,7 +44,7 @@ public class LogHelper {
 	/**
 	 * helper class e() to log error information.
 	 */
-	public static void e(Class<?> cls, String message)
+	public static void error(Class<?> cls, String message)
 	{
 		Logger log = LogManager.getLogger(cls);
 		log.error(message);

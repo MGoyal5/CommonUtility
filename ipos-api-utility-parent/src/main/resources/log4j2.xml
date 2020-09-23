@@ -12,17 +12,10 @@
     <Appenders>
         <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
             <PatternLayout disableAnsi="false"  pattern="${LOG_PATTERN}"/>
+            <JsonLayout complete="false" compact="false">
+            	<KeyValuePair key="ChildProject" value="RestFulWebServices" />
+        	</JsonLayout>
         </Console>
-        <!-- <File name="MyFile" fileName="d://logs//all.log" append="false">
-            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-        </File>
-        <RollingFile name="RollingFile" fileName="d://logs//all.log" filePattern="d://logs//app-%d{MM-dd-yyyy}.log"
-                 ignoreExceptions="false">
-	      <PatternLayout>
-	        <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
-	      </PatternLayout>
-	      <TimeBasedTriggeringPolicy />
-	    </RollingFile> -->
 	    <RollingFile name="RollingFile" fileName="/logs/app.log"
                  filePattern="/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
 	      <PatternLayout disableAnsi="false">
@@ -39,7 +32,11 @@
        <Root level="info">
        		<!-- <AppenderRef ref="MyFile"/> -->
        		<AppenderRef ref="RollingFile"/>
-		    <AppenderRef ref="ConsoleAppender"/>    
+		    <AppenderRef ref="ConsoleAppender">
+		    </AppenderRef>   
 		</Root>
+		<logger name="utility.logger.CustomeRequestLoggingFilter">
+		    <level value="DEBUG" />
+		</logger>
     </Loggers>
 </Configuration>
