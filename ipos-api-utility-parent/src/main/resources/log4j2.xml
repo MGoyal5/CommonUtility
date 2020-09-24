@@ -12,12 +12,9 @@
     <Appenders>
         <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
             <PatternLayout disableAnsi="false"  pattern="${LOG_PATTERN}"/>
-            <JsonLayout complete="false" compact="false">
-            	<KeyValuePair key="ChildProject" value="RestFulWebServices" />
-        	</JsonLayout>
         </Console>
-	    <RollingFile name="RollingFile" fileName="/logs/app.log"
-                 filePattern="/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
+	    <RollingFile name="RollingFile" fileName="/logger/app.log"
+                 filePattern="/logger/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
 	      <PatternLayout disableAnsi="false">
 	        <Pattern>
 	        %highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName}  %pid %tid --- [%t] %c : %m%n%ex}{FATAL=white, ERROR=red, WARN=blue, INFO=green, DEBUG=yellow, TRACE=blue}

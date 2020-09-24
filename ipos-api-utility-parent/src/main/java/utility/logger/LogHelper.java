@@ -30,6 +30,17 @@ public class LogHelper {
 		log.info(message);
 	}
 	
+	public static void info(String message,Object obj)
+	{
+		Logger log = LogManager.getLogger();
+		log.info(message,obj);
+	}
+	
+	public static void info(Class<?> cls, String message,Object obj)
+	{
+		Logger log = LogManager.getLogger(cls);
+		log.info(message,obj);
+	}
 	/**
 	 * helper class w() to log warning level information.
 	 */
