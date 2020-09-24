@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.java.Log;
@@ -21,33 +22,23 @@ import lombok.extern.java.Log;
 @Log
 public class LoggingServiceImpl implements LoggingService {
 
+	private ObjectMapper mapper = new ObjectMapper();
+
 	@Override
 	public void logRequest(HttpServletRequest httpServletRequest, Object body) {
+
 		StringBuilder stringBuilder = new StringBuilder();
-		CustomLoggerAttribute requestAttribute = new CustomLoggerAttribute();
-		ObjectMapper mapper = new ObjectMapper();
+		stringBuilder.append("REQUEST  ");
+
+		Map<String, Object> requestBody = buildBodyMap(body);
+
 		Map<String, String> parameters = buildParametersMap(httpServletRequest);
 		Map<String, String> headers = buildHeadersMap(httpServletRequest);
 
-		/*
-		 * stringBuilder.append("method=[").append(httpServletRequest.getMethod()).
-		 * append("] ");
-		 * stringBuilder.append("path=[").append(httpServletRequest.getRequestURL()).
-		 * append("] ");
-		 * stringBuilder.append("headers=[").append(buildHeadersMap(httpServletRequest))
-		 * .append("] ");
-		 * stringBuilder.append("client IP=[").append(httpServletRequest.getRemoteAddr()
-		 * ).append("]");
-		 */
-		if (!parameters.isEmpty()) {
-//			stringBuilder.append("parameters=[").append(parameters).append("] ");
-			requestAttribute.setParameter(parameters);
-		}
+		CustomRequestLoggerAttributes requestAttribute = new CustomRequestLoggerAttributes();
 
-		if (body != null) {
-//			stringBuilder.append("body=[" + body + "]");
-			requestAttribute.setResponseBody(body.toString());
-		}
+		if (!parameters.isEmpty() || parameters != null)
+			requestAttribute.setParameter(parameters);
 
 		if (httpServletRequest.getMethod() != null)
 			requestAttribute.setMethod(httpServletRequest.getMethod());
@@ -61,14 +52,11 @@ public class LoggingServiceImpl implements LoggingService {
 		if (httpServletRequest.getRemoteAddr() != null)
 			requestAttribute.setClientIP(httpServletRequest.getRemoteAddr());
 
-		String requestAttributeAsJson = null;
-		try {
-			requestAttributeAsJson = mapper.writeValueAsString(requestAttribute);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		stringBuilder.append("REQUEST ").append(requestAttributeAsJson);
+		if (requestBody != null)
+			requestAttribute.setRequestBody(requestBody);
+
+		stringBuilder.append(converToJson(requestAttribute));
+
 		LogHelper.info(this.getClass(), stringBuilder.toString());
 	}
 
@@ -77,16 +65,32 @@ public class LoggingServiceImpl implements LoggingService {
 			Object body) {
 
 		StringBuilder stringBuilder = new StringBuilder();
-
 		stringBuilder.append("RESPONSE ");
-		stringBuilder.append("method=[").append(httpServletRequest.getMethod()).append("] ");
-		stringBuilder.append("path=[").append(httpServletRequest.getRequestURL()).append("] ");
-		stringBuilder.append("responseHeaders=[").append(buildHeadersMap(httpServletResponse)).append("] ");
-		stringBuilder.append("responseBody=[").append(body).append("] ");
-		stringBuilder.append("responseCode=[").append(httpServletResponse.getStatus()).append("]");
-		stringBuilder.append("client IP=[").append(httpServletRequest.getRemoteAddr()).append("]");
 
-//		CustomLoggerAttribute customAttribute;
+		Map<String, Object> responseBody = buildBodyMap(body);
+		Map<String, String> headers = buildHeadersMap(httpServletResponse);
+
+		CustomResponseLoggingFilter responseAttribute = new CustomResponseLoggingFilter();
+
+		if (httpServletRequest.getMethod() != null)
+			responseAttribute.setMethod(httpServletRequest.getMethod());
+
+		if (httpServletRequest.getRequestURL().toString() != null)
+			responseAttribute.setPath(httpServletRequest.getRequestURL().toString());
+
+		if (headers != null)
+			responseAttribute.setResponseHeader(headers);
+
+		if (httpServletRequest.getRemoteAddr() != null)
+			responseAttribute.setClientIP(httpServletRequest.getRemoteAddr());
+
+		if (responseBody != null)
+			responseAttribute.setResponseBody(responseBody);
+
+		if (httpServletResponse.getStatus() != 0)
+			responseAttribute.setResponseCode(httpServletResponse.getStatus());
+
+		stringBuilder.append(converToJson(responseAttribute));
 		LogHelper.info(this.getClass(), stringBuilder.toString());
 	}
 
@@ -101,6 +105,16 @@ public class LoggingServiceImpl implements LoggingService {
 		}
 
 		return resultMap;
+	}
+
+	private Map<String, Object> buildBodyMap(Object obj) {
+		if (obj != null) {
+			Map<String, Object> resultMap = mapper.convertValue(obj, new TypeReference<Map<String, Object>>() {
+			});
+			return resultMap;
+		}
+
+		return null;
 	}
 
 	private Map<String, String> buildHeadersMap(HttpServletRequest request) {
@@ -125,5 +139,16 @@ public class LoggingServiceImpl implements LoggingService {
 		}
 
 		return map;
+	}
+
+	private String converToJson(Object obj) {
+		String jsonObj = null;
+		try {
+			jsonObj = mapper.writeValueAsString(obj);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jsonObj;
 	}
 }
