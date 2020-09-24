@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration status="WARN" monitorInterval="30">
+
+    <Properties>
+        <Property name="LOG_PATTERN">
+            
+            %highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName}  %pid %tid --- [%t] %c : %m%n%ex}{FATAL=white, ERROR=red, WARN=blue, INFO=green, DEBUG=yellow, TRACE=blue}
+        </Property>
+        <!-- <Property name="filename">target/test.log</Property> -->
+    </Properties>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout disableAnsi="false"  pattern="${LOG_PATTERN}"/>
+            <JsonLayout complete="false" compact="false">
+            	<KeyValuePair key="ChildProject" value="RestFulWebServices" />
+        	</JsonLayout>
+        </Console>
+	    <RollingFile name="RollingFile" fileName="/logger/app.log"
+                 filePattern="/logger/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
+	      <PatternLayout disableAnsi="false">
+	        <Pattern>
+	        %highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName}  %pid %tid --- [%t] %c : %m%n%ex}{FATAL=white, ERROR=red, WARN=blue, INFO=green, DEBUG=yellow, TRACE=blue}
+	        </Pattern>
+	      </PatternLayout>
+	      <Policies>
+	        <SizeBasedTriggeringPolicy size="10 MB"/>
+	      </Policies>
+	    </RollingFile>
+    </Appenders>
+    <Loggers>
+       <Root level="info">
+       		<!-- <AppenderRef ref="MyFile"/> -->
+       		<AppenderRef ref="RollingFile"/>
+		    <AppenderRef ref="ConsoleAppender">
+		    </AppenderRef>   
+		</Root>
+		<logger name="utility.logger.CustomeRequestLoggingFilter">
+		    <level value="DEBUG" />
+		</logger>
+    </Loggers>
+</Configuration>
