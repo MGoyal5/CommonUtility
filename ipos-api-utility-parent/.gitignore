@@ -3,6 +3,8 @@
 *.project
 *.settings
 /target/
+.classpath
+.factorypath
 
 # Log file
 *.log

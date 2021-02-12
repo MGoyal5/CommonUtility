@@ -1,6 +1,5 @@
 package utility.exceptionhandler;
 
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -78,24 +77,23 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 				HttpStatus.BAD_REQUEST.value(), ErrorStatus.NOHANDLERFOUND.getReasonPhrase(),
 				ErrorStatus.NOHANDLERFOUND.getSuggestion());
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
-	}	
-	
-	@ExceptionHandler(IposException.class)
-	public final ResponseEntity<ExceptionResponse> handleIposException(IposException ex,
-			WebRequest request) {
-		ExceptionResponse exceptionResponse = null;
-		if(ErrorStatus.ENTITYNOTFOUND.getReasonPhrase().equals(ex.getErrorMessage()))
-				{
-			exceptionResponse = new ExceptionResponse(ErrorStatus.ENTITYNOTFOUND.getValue(),HttpStatus.NOT_FOUND.value(),ErrorStatus.ENTITYNOTFOUND.getReasonPhrase(),ErrorStatus.ENTITYNOTFOUND.getSuggestion());
-				}
-		else if(ErrorStatus.ENTITYALREADYEXIST.getReasonPhrase().equals(ex.getErrorMessage()))
-		{
-			exceptionResponse = new ExceptionResponse(ErrorStatus.ENTITYALREADYEXIST.getValue(),HttpStatus.NOT_FOUND.value(),ErrorStatus.ENTITYALREADYEXIST.getReasonPhrase(),ErrorStatus.ENTITYALREADYEXIST.getSuggestion());
-		}
-		
-		return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_FOUND);
-		
 	}
-	
-	
+
+	@ExceptionHandler(IposException.class)
+	public final ResponseEntity<ExceptionResponse> handleIposException(IposException ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = null;
+		if (ErrorStatus.ENTITYNOTFOUND.getReasonPhrase().equals(ex.getErrorMessage())) {
+			exceptionResponse = new ExceptionResponse(ErrorStatus.ENTITYNOTFOUND.getValue(),
+					HttpStatus.NOT_FOUND.value(), ErrorStatus.ENTITYNOTFOUND.getReasonPhrase(),
+					ErrorStatus.ENTITYNOTFOUND.getSuggestion());
+		} else if (ErrorStatus.ENTITYALREADYEXIST.getReasonPhrase().equals(ex.getErrorMessage())) {
+			exceptionResponse = new ExceptionResponse(ErrorStatus.ENTITYALREADYEXIST.getValue(),
+					HttpStatus.NOT_FOUND.value(), ErrorStatus.ENTITYALREADYEXIST.getReasonPhrase(),
+					ErrorStatus.ENTITYALREADYEXIST.getSuggestion());
+		}
+
+		return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_FOUND);
+
+	}
+
 }

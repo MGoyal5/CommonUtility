@@ -1,18 +1,18 @@
 package utility.exceptionhandler.runtimeexception;
 
 public class IposException extends RuntimeException {
-	
-/**
-	 * 
-	 */
+
+	/**
+		 * 
+		 */
 	private static final long serialVersionUID = 1L;
 
-private int errorCode;
-	
+	private int errorCode;
+
 	private int statusCode;
-	
+
 	private String errorMessage;
-	
+
 	private String errorDetails;
 
 	public IposException(int errorCode, int statusCode, String errorMessage, String errorDetails) {
@@ -59,7 +59,5 @@ private int errorCode;
 	public void setErrorDetails(String errorDetails) {
 		this.errorDetails = errorDetails;
 	}
-    
-	
 
 }
